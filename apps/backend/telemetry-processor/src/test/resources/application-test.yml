@@ -1,0 +1,18 @@
+spring:
+  datasource:
+    url: jdbc:h2:mem:pulsegrid;MODE=PostgreSQL;DB_CLOSE_DELAY=-1
+    username: sa
+    password:
+  jpa:
+    hibernate:
+      ddl-auto: none
+  flyway:
+    enabled: false
+  kafka:
+    bootstrap-servers: localhost:9092
+    properties:
+      schema.registry.url: mock://pulsegrid-processor-test
+      specific.avro.reader: true
+    streams:
+      auto-startup: false
+      application-id: pulsegrid-telemetry-processor-test

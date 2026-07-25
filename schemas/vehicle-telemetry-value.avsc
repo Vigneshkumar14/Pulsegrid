@@ -1,0 +1,60 @@
+{
+  "type": "record",
+  "namespace": "com.pulsegrid.events.telemetry",
+  "name": "VehicleTelemetry",
+  "doc": "Telemetry event emitted by a simulated vehicle.",
+  "fields": [
+    {
+      "name": "eventId",
+      "type": "string",
+      "doc": "Unique identifier for the telemetry event."
+    },
+    {
+      "name": "vehicleId",
+      "type": "string",
+      "doc": "Unique identifier for the vehicle."
+    },
+    {
+      "name": "eventTimestamp",
+      "type": {
+        "type": "long",
+        "logicalType": "timestamp-millis"
+      },
+      "doc": "Timestamp at which the telemetry sample was generated."
+    },
+    {
+      "name": "latitude",
+      "type": "double",
+      "doc": "Latitude in decimal degrees."
+    },
+    {
+      "name": "longitude",
+      "type": "double",
+      "doc": "Longitude in decimal degrees."
+    },
+    {
+      "name": "speedKph",
+      "type": "double",
+      "doc": "Vehicle speed in kilometers per hour."
+    },
+    {
+      "name": "fuelOrBatteryLevelPct",
+      "type": "double",
+      "doc": "Remaining fuel or battery level as a percentage from 0 to 100."
+    },
+    {
+      "name": "odometerKm",
+      "type": "double",
+      "doc": "Total distance travelled by the vehicle in kilometers."
+    },
+    {
+      "name": "engineDiagnosticCode",
+      "type": [
+        "null",
+        "string"
+      ],
+      "default": null,
+      "doc": "Optional diagnostic trouble code when the vehicle reports a fault."
+    }
+  ]
+}

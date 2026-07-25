@@ -1,0 +1,11 @@
+spring:
+  application:
+    name: telemetry-processor
+  profiles:
+    default: local
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info

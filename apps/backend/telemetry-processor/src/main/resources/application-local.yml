@@ -1,0 +1,30 @@
+server:
+  port: 8083
+
+spring:
+  datasource:
+    url: jdbc:postgresql://localhost:5432/pulsegrid
+    username: pulsegrid
+    password: pulsegrid
+  jpa:
+    hibernate:
+      ddl-auto: validate
+    properties:
+      hibernate:
+        jdbc:
+          time_zone: UTC
+  flyway:
+    enabled: true
+  kafka:
+    bootstrap-servers: localhost:9092
+    properties:
+      schema.registry.url: http://localhost:8081
+      specific.avro.reader: true
+    streams:
+      application-id: pulsegrid-telemetry-processor
+
+pulsegrid:
+  kafka:
+    topics:
+      telemetry: vehicle.telemetry
+      telemetry-dlq: vehicle.telemetry.dlq
