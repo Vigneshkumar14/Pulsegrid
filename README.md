@@ -43,6 +43,13 @@ Remove volumes too:
 docker compose down -v
 ```
 
+If PostgreSQL fails after an image upgrade, reset the local Postgres volume and start again:
+
+```bash
+docker compose down -v
+docker compose up -d
+```
+
 ## Planned Stack
 
 - Java 21
