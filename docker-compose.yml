@@ -3,6 +3,7 @@ services:
     image: postgres:18.4
     container_name: pulsegrid-postgres
     environment:
+      TZ: UTC
       PGDATA: /var/lib/postgresql/18/docker
       POSTGRES_DB: pulsegrid
       POSTGRES_USER: pulsegrid
@@ -115,6 +116,8 @@ services:
     depends_on:
       postgres:
         condition: service_healthy
+    environment:
+      TZ: UTC
     command:
       - -url=jdbc:postgresql://postgres:5432/pulsegrid
       - -user=pulsegrid

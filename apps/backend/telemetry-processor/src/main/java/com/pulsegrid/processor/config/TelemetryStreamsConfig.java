@@ -11,6 +11,7 @@ import org.apache.kafka.streams.kstream.Consumed;
 import org.apache.kafka.streams.kstream.KStream;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.beans.factory.ObjectProvider;
 import org.springframework.boot.kafka.autoconfigure.KafkaProperties;
 
 @Configuration
@@ -28,11 +29,16 @@ public class TelemetryStreamsConfig {
 
     @Bean
     public KStream<String, VehicleTelemetry> telemetryStream(
-            StreamsBuilder streamsBuilder,
+            ObjectProvider<StreamsBuilder> streamsBuilderProvider,
             TelemetryTopicsProperties topics,
             SpecificAvroSerde<VehicleTelemetry> vehicleTelemetrySerde,
             VehicleStatusProjectionService projectionService
     ) {
+        StreamsBuilder streamsBuilder = streamsBuilderProvider.getIfAvailable();
+        if (streamsBuilder == null) {
+            return null;
+        }
+
         KStream<String, VehicleTelemetry> stream = streamsBuilder.stream(
                 topics.telemetry(),
                 Consumed.with(Serdes.String(), vehicleTelemetrySerde)
