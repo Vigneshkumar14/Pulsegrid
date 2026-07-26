@@ -29,7 +29,7 @@ public class TelemetryProducerService {
         VehicleTelemetry event = VehicleTelemetry.newBuilder()
                 .setEventId(eventId)
                 .setVehicleId(request.vehicleId())
-                .setEventTimestamp(Instant.now().toEpochMilli())
+                .setEventTimestamp(Instant.now())
                 .setLatitude(request.latitude())
                 .setLongitude(request.longitude())
                 .setSpeedKph(request.speedKph())

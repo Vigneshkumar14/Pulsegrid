@@ -21,7 +21,7 @@ public class VehicleStatusProjectionService {
         VehicleStatusEntity status = vehicleStatusRepository.findById(telemetry.getVehicleId())
                 .orElseGet(() -> new VehicleStatusEntity(telemetry.getVehicleId()));
 
-        status.setLastSeenAt(Instant.ofEpochMilli(telemetry.getEventTimestamp()));
+        status.setLastSeenAt(Instant.ofEpochMilli(telemetry.getEventTimestamp().toEpochMilli()));
         status.setLatitude(telemetry.getLatitude());
         status.setLongitude(telemetry.getLongitude());
         status.setSpeedKph(telemetry.getSpeedKph());
