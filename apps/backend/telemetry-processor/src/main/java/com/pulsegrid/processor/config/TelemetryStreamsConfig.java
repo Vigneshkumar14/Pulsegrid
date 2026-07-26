@@ -11,11 +11,18 @@ import org.apache.kafka.streams.kstream.Consumed;
 import org.apache.kafka.streams.kstream.KStream;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.beans.factory.ObjectProvider;
+import org.springframework.kafka.annotation.EnableKafkaStreams;
+import org.springframework.kafka.config.KafkaStreamsConfiguration;
 import org.springframework.boot.kafka.autoconfigure.KafkaProperties;
 
 @Configuration
+@EnableKafkaStreams
 public class TelemetryStreamsConfig {
+
+    @Bean
+    public KafkaStreamsConfiguration defaultKafkaStreamsConfig(KafkaProperties kafkaProperties) {
+        return new KafkaStreamsConfiguration(kafkaProperties.buildStreamsProperties());
+    }
 
     @Bean
     public SpecificAvroSerde<VehicleTelemetry> vehicleTelemetrySerde(KafkaProperties kafkaProperties) {
@@ -29,16 +36,11 @@ public class TelemetryStreamsConfig {
 
     @Bean
     public KStream<String, VehicleTelemetry> telemetryStream(
-            ObjectProvider<StreamsBuilder> streamsBuilderProvider,
+            StreamsBuilder streamsBuilder,
             TelemetryTopicsProperties topics,
             SpecificAvroSerde<VehicleTelemetry> vehicleTelemetrySerde,
             VehicleStatusProjectionService projectionService
     ) {
-        StreamsBuilder streamsBuilder = streamsBuilderProvider.getIfAvailable();
-        if (streamsBuilder == null) {
-            return null;
-        }
-
         KStream<String, VehicleTelemetry> stream = streamsBuilder.stream(
                 topics.telemetry(),
                 Consumed.with(Serdes.String(), vehicleTelemetrySerde)

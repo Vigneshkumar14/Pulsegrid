@@ -11,7 +11,7 @@ import org.springframework.boot.context.properties.ConfigurationPropertiesScan;
 public class TelemetryProcessorApplication {
 
     public static void main(String[] args) {
-        TimeZone.setDefault(TimeZone.getTimeZone("Asia/Kolkata"));
+        TimeZone.setDefault(TimeZone.getTimeZone("UTC"));
         SpringApplication.run(TelemetryProcessorApplication.class, args);
     }
 }
